@@ -18,38 +18,38 @@ public class BookingOpen implements BookingState {
 
 
     public BookingOpen(Booking booking) {
-    	//TODO Auto-generated method stub
+    	//implementiert in anderem Zweig
 
     }
 
     @Override
     public void returnCar() {
-    	//TODO Auto-generated method stub
+        //implementiert in anderem Zweig
 
     }
 
     @Override
     public void closeBooking() {
-    	//TODO Auto-generated method stub
+        //implementiert in anderem Zweig
 
     }
 
     @Override
     public boolean isOpen() {
-    	//TODO Auto-generated method stub
+        //implementiert in anderem Zweig
     	return false; 
 
     }
 
     @Override
     public boolean isCarInReturn() {
-    	//TODO Auto-generated method stub
+        //implementiert in anderem Zweig
     	return false;
     }
 
     @Override
     public boolean isClosed() {
-    	//TODO Auto-generated method stub
+        //implementiert in anderem Zweig
     	return false; 
     }
 
