@@ -52,7 +52,19 @@ public class CarRentalServiceImplTest {
     private CarRentalServiceInterface carRentalService;
     private DatabaseReadInterface dbReadMock;
     private DatabaseWriteInterface dbWriteMock;
+    Set<Car> allCars = new HashSet<>();
 
+    @BeforeEach
+    public void setup(){
+        dbReadMock = Mockito.mock(DatabaseReadInterface.class);
+        dbWriteMock = Mockito.mock(DatabaseWriteInterface.class);
+        carRentalService = new CarRentalServiceImpl(dbReadMock, dbWriteMock);
+
+        allCars.add(new Car("VW", LP_RV_HS_111));
+        allCars.add(new Car("Audi", LP_UL_M_123));
+
+        when(carRentalService.getAllCars()).thenReturn(allCars);
+    }
     @Test
     public void testGetAllCars() {
         Set<Car> cars = carRentalService.getAllCars();
