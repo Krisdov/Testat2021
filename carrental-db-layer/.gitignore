@@ -1,2 +1,3 @@
 /target/
 /.checkstyle
+/src/main/java/de/hrw/wi/databaseSetup/InitialDatabaseSetup
