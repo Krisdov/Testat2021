@@ -4,8 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Set;
 
+import org.dbunit.Assertion;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.JdbcDatabaseTester;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,10 +64,15 @@ public class DatabaseWriteInterfaceTest {
 
     DatabaseWriteInterface dbWrite;
     DatabaseReadInterface dbRead;
+    IDatabaseTester databaseTester;
 
 
     @BeforeEach
     public void setUp() throws Exception {
+        databaseTester = new JdbcDatabaseTester("org.hsqldb.jdbcDiver", DB_URL, USER, PASSWORD);
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream(DB_FULL_EXPORT_SHORT));
+        databaseTester.setDataSet(dataSet);
+        databaseTester.onSetup();
         RealDatabase db = new RealDatabase();
         dbWrite = db;
         dbRead = db;
@@ -85,8 +98,12 @@ public class DatabaseWriteInterfaceTest {
 
     @Test
     public void testAddIllegalCar() throws Exception {
-    	
+    	try {
             dbWrite.addCar("", AUDI);
+        } catch (PersistenceException e) {
+            IDataSet actualDataSet = databaseTester.getConnection().createDataSet();
+            Assertion.assertEquals(new FlatXmlDataSetBuilder().build(new File(DB_FULL_EXPORT_SHORT)), actualDataSet);
+        }
     }
 
     @Test
