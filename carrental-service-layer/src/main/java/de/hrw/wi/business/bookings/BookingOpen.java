@@ -16,40 +16,38 @@ package de.hrw.wi.business.bookings;
  */
 public class BookingOpen implements BookingState {
 
+    private Booking booking;
 
     public BookingOpen(Booking booking) {
-    	//TODO Auto-generated method stub
-
+        booking = this.booking;
     }
+    private String bookingNotEvenInReturn = "Car is not even in Return.";
 
     @Override
     public void returnCar() {
-    	//TODO Auto-generated method stub
+    	booking.setState(new CarInReturn(booking));
 
     }
 
     @Override
     public void closeBooking() {
-    	//TODO Auto-generated method stub
+    	throw new IllegalStateException(bookingNotEvenInReturn);
 
     }
 
     @Override
     public boolean isOpen() {
-    	//TODO Auto-generated method stub
-    	return false; 
+    	return true;
 
     }
 
     @Override
     public boolean isCarInReturn() {
-    	//TODO Auto-generated method stub
     	return false;
     }
 
     @Override
     public boolean isClosed() {
-    	//TODO Auto-generated method stub
     	return false; 
     }
 
